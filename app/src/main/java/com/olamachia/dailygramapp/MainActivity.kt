@@ -10,6 +10,5 @@ class MainActivity : AppCompatActivity() {
 
         /** Testing Linter */
         println("Hello, World")
-
     }
 }
