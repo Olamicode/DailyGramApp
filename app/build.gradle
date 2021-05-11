@@ -33,13 +33,13 @@ android {
     }
 }
 
-kotlinter {
-    ignoreFailures = false
-    indentSize = 4
-    reporters = ['checkstyle', 'plain']
-    experimentalRules = false
-    disabledRules = ["no-wildcard-imports" ]
-}
+//kotlinter {
+//    ignoreFailures = false
+//    indentSize = 4
+//    reporters = ['checkstyle', 'plain']
+//    experimentalRules = false
+//    disabledRules = ["no-wildcard-imports" ]
+//}
 
 dependencies {
 
@@ -51,8 +51,4 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-}
-
-tasks.check {
-    dependsOn("installKotlinterPrePushHook")
 }
