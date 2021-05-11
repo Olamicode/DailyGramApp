@@ -33,13 +33,13 @@ android {
     }
 }
 
-//kotlinter {
-//    ignoreFailures = false
-//    indentSize = 4
-//    reporters = ['checkstyle', 'plain']
-//    experimentalRules = false
-//    disabledRules = ["no-wildcard-imports" ]
-//}
+kotlinter {
+    ignoreFailures = false
+    indentSize = 4
+    reporters = ['checkstyle', 'plain']
+    experimentalRules = false
+    disabledRules = ["no-wildcard-imports" ]
+}
 
 dependencies {
 
