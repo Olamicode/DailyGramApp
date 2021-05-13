@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:padding="22dp">
+
+    <ImageView
+        android:id="@+id/news_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_news"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/news_channel_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/dummy_text"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/news_iv"
+        app:layout_constraintStart_toEndOf="@+id/news_iv"
+        app:layout_constraintTop_toTopOf="@+id/news_iv" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_channel_tv">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/news_article_iv"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <ImageView
+                android:id="@+id/gradient_iv"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:src="@drawable/gradient"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/news_article_iv" />
+
+            <TextView
+                android:id="@+id/news_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Tesla sees bitcoin as important financial tool to access cash quickly" />
+
+            <ImageView
+                android:id="@+id/alte_gradient_iv"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@drawable/alte_gradient"
+                app:layout_constraintBottom_toBottomOf="@+id/news_article_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/news_like_iv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="@dimen/eight_pixel"
+                android:src="@drawable/ic_like"
+                app:layout_constraintBottom_toBottomOf="@id/alte_gradient_iv"
+                app:layout_constraintStart_toStartOf="@id/alte_gradient_iv"
+                app:layout_constraintTop_toTopOf="@id/alte_gradient_iv" />
+
+            <ImageView
+                android:id="@+id/news_share_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_share"
+                app:layout_constraintBottom_toBottomOf="@id/alte_gradient_iv"
+                app:layout_constraintEnd_toStartOf="@+id/news_bookmark_iv"
+                app:layout_constraintHorizontal_bias="0.07"
+                app:layout_constraintStart_toEndOf="@+id/news_like_iv"
+                app:layout_constraintTop_toTopOf="@id/alte_gradient_iv" />
+
+            <ImageView
+                android:id="@+id/news_bookmark_iv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="@dimen/eight_pixel"
+                android:src="@drawable/ic_bookmark"
+                app:layout_constraintBottom_toBottomOf="@id/alte_gradient_iv"
+                app:layout_constraintEnd_toEndOf="@id/alte_gradient_iv"
+                app:layout_constraintTop_toTopOf="@+id/alte_gradient_iv" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
