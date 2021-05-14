@@ -88,7 +88,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="@dimen/eight_pixel"
-                android:src="@drawable/ic_like"
+                android:src="@drawable/ic_like_unselected"
                 app:layout_constraintBottom_toBottomOf="@id/alte_gradient_iv"
                 app:layout_constraintStart_toStartOf="@id/alte_gradient_iv"
                 app:layout_constraintTop_toTopOf="@id/alte_gradient_iv" />
@@ -109,7 +109,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="@dimen/eight_pixel"
-                android:src="@drawable/ic_bookmark"
+                android:src="@drawable/ic_bookmark_unselected"
                 app:layout_constraintBottom_toBottomOf="@id/alte_gradient_iv"
                 app:layout_constraintEnd_toEndOf="@id/alte_gradient_iv"
                 app:layout_constraintTop_toTopOf="@+id/alte_gradient_iv" />

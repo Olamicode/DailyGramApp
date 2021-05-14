@@ -15,7 +15,7 @@
 
     <item
         android:id="@+id/nav_bookmarks"
-        android:icon="@drawable/ic_bookmark"
+        android:icon="@drawable/ic_bookmark_unselected"
         android:title="@string/bookmarks"
         />
 
