@@ -7,8 +7,10 @@ import com.olamachia.dailygramapp.databinding.ActivityMainBinding
 import com.olamachia.dailygramapp.features.bookmarks.BookmarksFragment
 import com.olamachia.dailygramapp.features.searchnews.SearchNewsFragment
 import com.olamachia.dailygramapp.features.topnews.TopNewsFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.IllegalArgumentException
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var topNewsFragment: TopNewsFragment

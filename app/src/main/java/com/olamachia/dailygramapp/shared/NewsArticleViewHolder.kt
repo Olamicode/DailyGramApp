@@ -8,6 +8,9 @@ import com.olamachia.dailygramapp.databinding.TopNewsItemBinding
 
 class NewsArticleViewHolder(
     private val binding: TopNewsItemBinding,
+    private val onItemClick: (Int) -> Unit,
+    private val onBookmarkClicked: (Int) -> Unit,
+    private val onLikeClicked: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(newsArticle: NewsArticle) {
@@ -19,9 +22,10 @@ class NewsArticleViewHolder(
 
             newsTitleTv.text = newsArticle.title
             newsChannelTv.text = newsArticle.source
+
             newsBookmarkIv.setImageResource(
-                when {
-                    newsArticle.isBookmarked -> R.drawable.ic_bookmark_selected
+                when (newsArticle.isBookmarked) {
+                    true -> R.drawable.ic_bookmark_selected
                     else -> R.drawable.ic_bookmark_unselected
                 }
             )
@@ -33,6 +37,33 @@ class NewsArticleViewHolder(
             )
 
         }
+    }
+
+    init {
+        binding.apply {
+            root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(position)
+                }
+            }
+
+            newsBookmarkIv.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onBookmarkClicked(position)
+                }
+            }
+
+            newsLikeIv.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onLikeClicked(position)
+                }
+            }
+
+        }
+
     }
 
 }

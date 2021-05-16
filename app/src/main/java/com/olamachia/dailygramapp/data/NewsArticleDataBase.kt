@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [NewsArticle::class, BreakingNews::class, SearchResult::class],
+    entities = [NewsArticle::class, TopNews::class, SearchResult::class],
     version = 1
 )
 abstract class NewsArticleDataBase: RoomDatabase() {

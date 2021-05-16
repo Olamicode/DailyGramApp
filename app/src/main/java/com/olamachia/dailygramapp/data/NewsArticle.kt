@@ -15,8 +15,8 @@ data class NewsArticle(
     val updatedAt: Long = System.currentTimeMillis()
 )
 
-@Entity(tableName = "breaking_news")
-data class BreakingNews(
+@Entity(tableName = "top_news")
+data class TopNews(
     val articleUrl: String,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 )

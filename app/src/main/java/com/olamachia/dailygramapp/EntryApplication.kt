@@ -1,4 +1,4 @@
-package com.olamachia
+package com.olamachia.dailygramapp
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
