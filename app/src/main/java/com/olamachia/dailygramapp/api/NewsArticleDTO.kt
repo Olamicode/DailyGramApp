@@ -7,7 +7,6 @@ data class NewsArticleDTO(
     val urlToImage: String
 )
 
-
 data class Source(
     val id: String?,
     val name: String

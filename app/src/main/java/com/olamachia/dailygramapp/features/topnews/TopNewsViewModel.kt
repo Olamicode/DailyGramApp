@@ -13,22 +13,21 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class TopNewsViewModel @Inject constructor(
     private val newsRepository: NewsRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val eventChannel = Channel<Event>()
     val events = eventChannel.receiveAsFlow()
 
-    private val refreshTriggerChannel = Channel<Unit>()
+    private val refreshTriggerChannel = Channel<Refresh>()
     private val refreshTrigger = refreshTriggerChannel.receiveAsFlow()
 
     val topNews = refreshTrigger.flatMapLatest { refresh ->
         newsRepository.getTopNews(
+            forceRefresh = refresh == Refresh.FORCE,
             onFetchSuccess = {
-
             },
             onFetchFailed = { t ->
                 viewModelScope.launch {
@@ -38,22 +37,27 @@ class TopNewsViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-
     fun onStart() {
         if (topNews.value !is Resource.Loading) {
             viewModelScope.launch {
-                refreshTriggerChannel.send(Unit)
+                refreshTriggerChannel.send(Refresh.NORMAL)
             }
         }
     }
 
+    fun onManualRefresh() {
+        if (topNews.value !is Resource.Loading) {
+            viewModelScope.launch {
+                refreshTriggerChannel.send(Refresh.FORCE)
+            }
+        }
+    }
 
     enum class Refresh {
         FORCE, NORMAL
     }
 
     sealed class Event {
-        data class ShowErrorMessage(val error: Throwable): Event()
+        data class ShowErrorMessage(val error: Throwable) : Event()
     }
-
 }
