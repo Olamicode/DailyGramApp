@@ -40,9 +40,23 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 requireActivity().startActivity(intent)
             },
-            onBookmarkClicked = {
+            onBookmarkClicked = { article ->
+                viewModel.onBookmarkClicked(article)
             },
-            onLikeClicked = {
+            onLikeClicked = { article ->
+                viewModel.onLikeClicked(article)
+            },
+            onShareClicked = { article ->
+
+                val articleUrl = article.url
+                val sendIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, articleUrl)
+                    type = "text/plain"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
             }
         )
 
@@ -95,7 +109,6 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
                     }.exhaustive
                 }
             }
-
         }
 
         setHasOptionsMenu(true)
@@ -114,7 +127,6 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
             }
             else -> super.onOptionsItemSelected(item)
         }
-
 
     override fun onStart() {
         super.onStart()

@@ -12,5 +12,5 @@ fun Fragment.showSnackBar(
     Snackbar.make(view, message, duration).show()
 }
 
-val <T> T.exhaustive : T
+val <T> T.exhaustive: T
     get() = this

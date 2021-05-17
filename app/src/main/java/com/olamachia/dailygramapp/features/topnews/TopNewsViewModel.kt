@@ -2,6 +2,7 @@ package com.olamachia.dailygramapp.features.topnews
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.olamachia.dailygramapp.data.NewsArticle
 import com.olamachia.dailygramapp.data.NewsRepository
 import com.olamachia.dailygramapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,6 +51,22 @@ class TopNewsViewModel @Inject constructor(
             viewModelScope.launch {
                 refreshTriggerChannel.send(Refresh.FORCE)
             }
+        }
+    }
+
+    fun onBookmarkClicked(newsArticle: NewsArticle) {
+        val currentlyBookmarked = newsArticle.isBookmarked
+        val updatedArticle = newsArticle.copy(isBookmarked = !currentlyBookmarked)
+        viewModelScope.launch {
+            newsRepository.updateArticle(updatedArticle)
+        }
+    }
+
+    fun onLikeClicked(newsArticle: NewsArticle) {
+        val currentlyLiked = newsArticle.isLiked
+        val updatedArticle = newsArticle.copy(isLiked = !currentlyLiked)
+        viewModelScope.launch {
+            newsRepository.updateArticle(updatedArticle)
         }
     }
 

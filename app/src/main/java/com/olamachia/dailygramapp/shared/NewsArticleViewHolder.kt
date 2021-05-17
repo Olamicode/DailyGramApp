@@ -10,7 +10,8 @@ class NewsArticleViewHolder(
     private val binding: TopNewsItemBinding,
     private val onItemClick: (Int) -> Unit,
     private val onBookmarkClicked: (Int) -> Unit,
-    private val onLikeClicked: (Int) -> Unit
+    private val onLikeClicked: (Int) -> Unit,
+    private val onShareClicked: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(newsArticle: NewsArticle) {
@@ -24,8 +25,8 @@ class NewsArticleViewHolder(
             newsChannelTv.text = newsArticle.source
 
             newsBookmarkIv.setImageResource(
-                when (newsArticle.isBookmarked) {
-                    true -> R.drawable.ic_bookmark_selected
+                when {
+                    newsArticle.isBookmarked -> R.drawable.ic_bookmark_selected
                     else -> R.drawable.ic_bookmark_unselected
                 }
             )
@@ -58,6 +59,13 @@ class NewsArticleViewHolder(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onLikeClicked(position)
+                }
+            }
+
+            newsShareIv.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onShareClicked(position)
                 }
             }
         }
