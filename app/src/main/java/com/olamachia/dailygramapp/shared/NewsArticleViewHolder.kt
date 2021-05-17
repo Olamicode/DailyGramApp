@@ -35,7 +35,6 @@ class NewsArticleViewHolder(
                     else -> R.drawable.ic_like_unselected
                 }
             )
-
         }
     }
 
@@ -61,9 +60,6 @@ class NewsArticleViewHolder(
                     onLikeClicked(position)
                 }
             }
-
         }
-
     }
-
 }

@@ -1,6 +1,5 @@
 package com.olamachia.dailygramapp.utils
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collect
@@ -23,7 +22,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
         }
 
         try {
-            //delay(2000)
+            // delay(2000)
             saveFetchResult(fetch())
             onFetchSuccess()
             loading.cancel()
@@ -33,11 +32,9 @@ inline fun <ResultType, RequestType> networkBoundResource(
             loading.cancel()
             query().collect { send(Resource.Error(t, it)) }
         }
-
     } else {
         query().collect {
             send(Resource.Success(it))
         }
     }
-
 }

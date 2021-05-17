@@ -3,9 +3,10 @@ package com.olamachia.dailygramapp.features.topnews
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.databinding.FragmentTopNewsBinding
 import com.olamachia.dailygramapp.shared.NewsArticleListAdapter
+import com.olamachia.dailygramapp.utils.Resource
+import com.olamachia.dailygramapp.utils.exhaustive
+import com.olamachia.dailygramapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -55,6 +59,7 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
 
                     val result = it ?: return@collect
 
+                    swipeRefreshLayout.isRefreshing = result is Resource.Loading
                     fragmentTopNewsRv.isVisible = !result.data.isNullOrEmpty()
                     retryTv.isVisible = result.error != null && result.data.isNullOrEmpty()
                     retryBtn.isVisible = result.error != null && result.data.isNullOrEmpty()
@@ -66,9 +71,50 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
                     newsArticleListAdapter.submitList(result.data)
                 }
             }
+
+            swipeRefreshLayout.setOnRefreshListener {
+                viewModel.onManualRefresh()
+            }
+
+            retryBtn.setOnClickListener {
+                viewModel.onStart()
+            }
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is TopNewsViewModel.Event.ShowErrorMessage -> {
+                            showSnackBar(
+                                getString(
+                                    R.string.could_not_refresh,
+                                    event.error.localizedMessage
+                                        ?: getString(R.string.unknown_error_occurred)
+                                )
+                            )
+                        }
+                    }.exhaustive
+                }
+            }
+
         }
 
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_top_news, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            R.id.action_refresh -> {
+                binding.swipeRefreshLayout.isRefreshing = true
+                viewModel.onManualRefresh()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
 
     override fun onStart() {
         super.onStart()
