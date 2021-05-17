@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "news_articles")
 data class NewsArticle(
+    val title: String?,
     @PrimaryKey
     val url: String,
-    val title: String?,
     val source: String,
     val thumbnailUrl: String?,
     val isBookmarked: Boolean,

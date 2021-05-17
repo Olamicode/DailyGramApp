@@ -10,6 +10,7 @@ class NewsArticleListAdapter(
     private val onItemClick: (NewsArticle) -> Unit,
     private val onBookmarkClicked: (NewsArticle) -> Unit,
     private val onLikeClicked: (NewsArticle) -> Unit,
+    private val onShareClicked: (NewsArticle) -> Unit
 ) :
     ListAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
@@ -32,6 +33,12 @@ class NewsArticleListAdapter(
                 val article = getItem(position)
                 if (article != null) {
                     onLikeClicked(article)
+                }
+            },
+            onShareClicked = { position ->
+                val article = getItem(position)
+                if (article != null) {
+                    onShareClicked(article)
                 }
             }
         )

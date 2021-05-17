@@ -1,12 +1,11 @@
 package com.olamachia.dailygramapp.data
 
-import android.util.Log
-import android.util.TimeUtils
 import androidx.room.withTransaction
 import com.olamachia.dailygramapp.api.NewsAPI
 import com.olamachia.dailygramapp.utils.Resource
 import com.olamachia.dailygramapp.utils.networkBoundResource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -30,21 +29,31 @@ class NewsRepository @Inject constructor(
 
             fetch = {
                 val response = newsAPI.getTopNews()
-                Log.d("GETTOPNEWS", response.articles.toString())
                 response.articles
             },
 
             saveFetchResult = { serverNewsArticles ->
 
+                val bookmarkedArticles = newsArticleDao.getAllBookmarkedArticles().first()
+                val likedArticles = newsArticleDao.getAllLikedArticles().first()
+
                 val newsArticles = serverNewsArticles.map { serverNewsArticle ->
+
+                    val isBookmarked = bookmarkedArticles.any { bookmarkedArticle ->
+                        bookmarkedArticle.url == serverNewsArticle.url
+                    }
+
+                    val isLiked = likedArticles.any { likedArticle ->
+                        likedArticle.url == serverNewsArticle.url
+                    }
 
                     NewsArticle(
                         url = serverNewsArticle.url,
                         title = serverNewsArticle.title,
                         source = serverNewsArticle.source.name,
                         thumbnailUrl = serverNewsArticle.urlToImage,
-                        isBookmarked = true,
-                        isLiked = true,
+                        isBookmarked = isBookmarked,
+                        isLiked = isLiked,
                     )
                 }
 
@@ -69,8 +78,8 @@ class NewsRepository @Inject constructor(
 
                     val oldestTimeStamp = sortedCachedArticles.firstOrNull()?.updatedAt
                     val needsRefresh = oldestTimeStamp == null ||
-                            oldestTimeStamp < System.currentTimeMillis() -
-                            TimeUnit.MINUTES.toMillis(60)
+                        oldestTimeStamp < System.currentTimeMillis() -
+                        TimeUnit.MINUTES.toMillis(60)
 
                     needsRefresh
                 }
@@ -87,4 +96,8 @@ class NewsRepository @Inject constructor(
             }
 
         )
+
+    suspend fun updateArticle(newsArticle: NewsArticle) {
+        newsArticleDao.updateArticle(newsArticle)
+    }
 }
