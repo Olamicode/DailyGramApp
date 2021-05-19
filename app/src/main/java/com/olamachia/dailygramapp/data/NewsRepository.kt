@@ -100,4 +100,12 @@ class NewsRepository @Inject constructor(
     suspend fun updateArticle(newsArticle: NewsArticle) {
         newsArticleDao.updateArticle(newsArticle)
     }
+
+    fun getAllBookmarkedArticles(): Flow<List<NewsArticle>> =
+        newsArticleDao.getAllBookmarkedArticles()
+
+    suspend fun resetAllBookmarks() {
+        newsArticleDao.resetAllBookmarks()
+    }
+
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".features.topnews.TopNewsFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,38 +12,91 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/fragment_top_news_rv"
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/top_news_item"
-                />
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/retry_tv"
+                <!-- Adding 15 rows of placeholders -->
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+                        <include layout="@layout/shimmer_placeholder_top_news" />
+
+
+                    </LinearLayout>
+
+
+                </androidx.core.widget.NestedScrollView>
+
+
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/retry_btn"
-                android:layout_margin="@dimen/eight_pixel"
-                android:gravity="center_horizontal"
-                android:visibility="gone"
-                tools:text="An error occurred."
-                tools:visibility="visible" />
+                android:layout_height="match_parent"
+                >
 
-            <Button
-                android:id="@+id/retry_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/retry"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/fragment_top_news_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/top_news_item"
+                    android:visibility="gone"
+                    />
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

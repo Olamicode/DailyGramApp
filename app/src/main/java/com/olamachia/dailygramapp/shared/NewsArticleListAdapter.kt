@@ -1,5 +1,6 @@
 package com.olamachia.dailygramapp.shared
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -15,6 +16,7 @@ class NewsArticleListAdapter(
     ListAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
         val binding = TopNewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return NewsArticleViewHolder(
             binding,
             onItemClick = { position ->
@@ -50,4 +52,5 @@ class NewsArticleListAdapter(
             holder.bind(currentItem)
         }
     }
+
 }

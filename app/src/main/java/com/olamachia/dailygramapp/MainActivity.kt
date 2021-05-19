@@ -95,6 +95,12 @@ class MainActivity : AppCompatActivity() {
                 else -> throw IllegalArgumentException("Unexpected ItemId")
             }
 
+            if (fragment === selectedFragment) {
+                if (fragment is OnBottomNavigationFragmentReselectedListener) {
+                    fragment.onBottomNavigationFragmentReselected()
+                }
+            }
+
             selectFragment(fragment)
             true
         }
@@ -108,5 +114,9 @@ class MainActivity : AppCompatActivity() {
          * selected */
 
         outState.putInt(KEY_SELECTED_INDEX, selectedIndex)
+    }
+
+    interface OnBottomNavigationFragmentReselectedListener {
+        fun onBottomNavigationFragmentReselected()
     }
 }

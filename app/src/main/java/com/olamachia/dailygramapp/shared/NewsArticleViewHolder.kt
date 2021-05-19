@@ -1,10 +1,13 @@
 package com.olamachia.dailygramapp.shared
 
+
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.data.NewsArticle
 import com.olamachia.dailygramapp.databinding.TopNewsItemBinding
+
 
 class NewsArticleViewHolder(
     private val binding: TopNewsItemBinding,
@@ -13,6 +16,7 @@ class NewsArticleViewHolder(
     private val onLikeClicked: (Int) -> Unit,
     private val onShareClicked: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
+
 
     fun bind(newsArticle: NewsArticle) {
         binding.apply {
@@ -30,12 +34,27 @@ class NewsArticleViewHolder(
                     else -> R.drawable.ic_bookmark_unselected
                 }
             )
-            newsLikeIv.setImageResource(
-                when {
-                    newsArticle.isLiked -> R.drawable.ic_like_selected
-                    else -> R.drawable.ic_like_unselected
-                }
-            )
+
+//            newsLikeIv.setImageResource(
+//                when {
+//                    newsArticle.isLiked -> {
+//                        R.drawable.ic_like_selected
+//                    }
+//                    else -> {
+//                        R.drawable.ic_like_unselected
+//                    }
+//                }
+//            )
+
+            if (newsArticle.isLiked){
+                newsLikeIv.visibility = View.GONE
+                newsLikeLottieIv.visibility = View.VISIBLE
+                newsLikeLottieIv.playAnimation()
+            } else {
+                newsLikeIv.visibility = View.VISIBLE
+                newsLikeLottieIv.visibility = View.GONE
+            }
+
         }
     }
 
@@ -62,6 +81,14 @@ class NewsArticleViewHolder(
                 }
             }
 
+            newsLikeLottieIv.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    newsLikeLottieIv.playAnimation()
+                    onLikeClicked(position)
+                }
+            }
+
             newsShareIv.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -70,4 +97,6 @@ class NewsArticleViewHolder(
             }
         }
     }
+
+
 }

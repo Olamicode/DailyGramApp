@@ -11,7 +11,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.olamachia.dailygramapp.MainActivity
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.databinding.FragmentTopNewsBinding
 import com.olamachia.dailygramapp.shared.NewsArticleListAdapter
@@ -22,7 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
+class TopNewsFragment : Fragment(R.layout.fragment_top_news),
+    MainActivity.OnBottomNavigationFragmentReselectedListener {
 
     private val viewModel: TopNewsViewModel by viewModels()
 
@@ -60,6 +64,9 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
             }
         )
 
+        newsArticleListAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
         binding.apply {
             fragmentTopNewsRv.apply {
                 adapter = newsArticleListAdapter
@@ -73,16 +80,21 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
 
                     val result = it ?: return@collect
 
+
+                    if (!result.data.isNullOrEmpty()) {
+                        shimmerFrameLayout.stopShimmer()
+                        shimmerFrameLayout.visibility = View.GONE
+                    }
+
                     swipeRefreshLayout.isRefreshing = result is Resource.Loading
                     fragmentTopNewsRv.isVisible = !result.data.isNullOrEmpty()
-                    retryTv.isVisible = result.error != null && result.data.isNullOrEmpty()
-                    retryBtn.isVisible = result.error != null && result.data.isNullOrEmpty()
-                    retryTv.text = getString(
-                        R.string.could_not_refresh,
-                        result.error?.localizedMessage ?: getString(R.string.unknown_error_occurred)
-                    )
 
-                    newsArticleListAdapter.submitList(result.data)
+                    newsArticleListAdapter.submitList(result.data) {
+                        if (viewModel.pendingScrollToTopAfterRefresh) {
+                            fragmentTopNewsRv.scrollToPosition(0)
+                            viewModel.pendingScrollToTopAfterRefresh = false
+                        }
+                    }
                 }
             }
 
@@ -90,9 +102,6 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
                 viewModel.onManualRefresh()
             }
 
-            retryBtn.setOnClickListener {
-                viewModel.onStart()
-            }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.events.collect { event ->
@@ -104,7 +113,9 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
                                     event.error.localizedMessage
                                         ?: getString(R.string.unknown_error_occurred)
                                 )
-                            )
+                            ){
+                                viewModel.onStart()
+                            }
                         }
                     }.exhaustive
                 }
@@ -133,8 +144,17 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
         viewModel.onStart()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.shimmerFrameLayout.startShimmer()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         currentBinding = null
+    }
+
+    override fun onBottomNavigationFragmentReselected() {
+        binding.fragmentTopNewsRv.scrollToPosition(0)
     }
 }
