@@ -30,4 +30,7 @@ interface NewsArticleDao {
     @Query("UPDATE news_articles SET isBookmarked = 0")
     suspend fun resetAllBookmarks()
 
+    @Query("DELETE FROM news_articles WHERE updatedAt < :timestampInMillis AND isBookmarked = 0")
+    suspend fun deleteAllNonBookmarkedArticlesOlderThan(timestampInMillis: Long)
+
 }

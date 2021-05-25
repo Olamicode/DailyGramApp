@@ -1,5 +1,6 @@
 package com.olamachia.dailygramapp.features.topnews
 
+import android.util.TimeUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +25,6 @@ class TopNewsViewModel @Inject constructor(
     private val refreshTriggerChannel = Channel<Refresh>()
     private val refreshTrigger = refreshTriggerChannel.receiveAsFlow()
     var pendingScrollToTopAfterRefresh = false
-    var isLikeClickedFlag = MutableLiveData<Boolean>()
 
     val topNews = refreshTrigger.flatMapLatest { refresh ->
         newsRepository.getTopNews(
@@ -39,6 +40,14 @@ class TopNewsViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+    init {
+        viewModelScope.launch {
+            newsRepository.deleteAllNonBookmarkedArticlesOlderThan(
+                System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)
+            )
+        }
+    }
+
     fun onStart() {
         if (topNews.value !is Resource.Loading) {
             viewModelScope.launch {
@@ -46,6 +55,7 @@ class TopNewsViewModel @Inject constructor(
             }
         }
     }
+
 
     fun onManualRefresh() {
         if (topNews.value !is Resource.Loading) {

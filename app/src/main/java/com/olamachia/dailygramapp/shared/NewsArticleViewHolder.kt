@@ -35,16 +35,6 @@ class NewsArticleViewHolder(
                 }
             )
 
-//            newsLikeIv.setImageResource(
-//                when {
-//                    newsArticle.isLiked -> {
-//                        R.drawable.ic_like_selected
-//                    }
-//                    else -> {
-//                        R.drawable.ic_like_unselected
-//                    }
-//                }
-//            )
 
             if (newsArticle.isLiked){
                 newsLikeIv.visibility = View.GONE

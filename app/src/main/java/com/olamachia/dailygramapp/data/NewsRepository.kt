@@ -108,4 +108,8 @@ class NewsRepository @Inject constructor(
         newsArticleDao.resetAllBookmarks()
     }
 
+    suspend fun deleteAllNonBookmarkedArticlesOlderThan(timestampInMillis: Long) {
+        newsArticleDao.deleteAllNonBookmarkedArticlesOlderThan(timestampInMillis)
+    }
+
 }
