@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookmarksViewModel @Inject constructor(
     private val newsRepository: NewsRepository
-): ViewModel() {
+) : ViewModel() {
 
     val bookmarks = newsRepository.getAllBookmarkedArticles()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
@@ -39,5 +39,4 @@ class BookmarksViewModel @Inject constructor(
             newsRepository.resetAllBookmarks()
         }
     }
-
 }

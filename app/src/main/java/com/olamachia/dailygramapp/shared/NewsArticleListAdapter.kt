@@ -1,6 +1,5 @@
 package com.olamachia.dailygramapp.shared
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -52,5 +51,4 @@ class NewsArticleListAdapter(
             holder.bind(currentItem)
         }
     }
-
 }

@@ -1,7 +1,5 @@
 package com.olamachia.dailygramapp.features.topnews
 
-import android.util.TimeUtils
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.olamachia.dailygramapp.data.NewsArticle
@@ -55,7 +53,6 @@ class TopNewsViewModel @Inject constructor(
             }
         }
     }
-
 
     fun onManualRefresh() {
         if (topNews.value !is Resource.Loading) {

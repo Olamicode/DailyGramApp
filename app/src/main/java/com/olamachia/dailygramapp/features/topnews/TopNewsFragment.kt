@@ -11,7 +11,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.olamachia.dailygramapp.MainActivity
@@ -25,7 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class TopNewsFragment : Fragment(R.layout.fragment_top_news),
+class TopNewsFragment :
+    Fragment(R.layout.fragment_top_news),
     MainActivity.OnBottomNavigationFragmentReselectedListener {
 
     private val viewModel: TopNewsViewModel by viewModels()
@@ -80,7 +80,6 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news),
 
                     val result = it ?: return@collect
 
-
                     if (!result.data.isNullOrEmpty()) {
                         shimmerFrameLayout.stopShimmer()
                         shimmerFrameLayout.visibility = View.GONE
@@ -102,7 +101,6 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news),
                 viewModel.onManualRefresh()
             }
 
-
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.events.collect { event ->
                     when (event) {
@@ -113,7 +111,7 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news),
                                     event.error.localizedMessage
                                         ?: getString(R.string.unknown_error_occurred)
                                 )
-                            ){
+                            ) {
                                 viewModel.onStart()
                             }
                         }
