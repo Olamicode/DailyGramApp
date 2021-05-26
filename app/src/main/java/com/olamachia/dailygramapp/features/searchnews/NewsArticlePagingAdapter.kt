@@ -13,7 +13,7 @@ class NewsArticlePagingAdapter(
     private val onBookmarkClicked: (NewsArticle) -> Unit,
     private val onLikeClicked: (NewsArticle) -> Unit,
     private val onShareClicked: (NewsArticle) -> Unit
-) : PagingDataAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()){
+) : PagingDataAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
         val binding =
@@ -54,6 +54,4 @@ class NewsArticlePagingAdapter(
             holder.bind(currentItem)
         }
     }
-
-
 }
