@@ -3,8 +3,6 @@ package com.olamachia.dailygramapp.features.bookmarks
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -15,17 +13,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.olamachia.dailygramapp.MainActivity
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.databinding.FragmentBookmarksBinding
 import com.olamachia.dailygramapp.shared.NewsArticleListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-
 import kotlinx.coroutines.flow.collect
-import java.util.concurrent.TimeUnit
-
 
 @AndroidEntryPoint
-class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
+class BookmarksFragment :
+    Fragment(R.layout.fragment_bookmarks),
+    MainActivity.OnBottomNavigationFragmentReselectedListener {
 
     private var currentBinding: FragmentBookmarksBinding? = null
     private val binding get() = currentBinding!!
@@ -57,7 +55,6 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
 
                 val shareIntent = Intent.createChooser(sendIntent, null)
                 startActivity(shareIntent)
-
             },
             onLikeClicked = { article ->
                 viewModel.onLikeClicked(article)
@@ -83,11 +80,9 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
                     newsArticleListAdapter.submitList(bookmarks)
                     noBookmarksTv.isVisible = bookmarks.isEmpty()
                     noBookmarkNewsIv.isVisible = bookmarks.isEmpty()
-
                 }
             }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -100,12 +95,15 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
                 viewModel.deleteAllBookmark()
                 true
             }
-            else ->  super.onOptionsItemSelected(item)
-
+            else -> super.onOptionsItemSelected(item)
         }
 
     override fun onDestroyView() {
         super.onDestroyView()
         currentBinding = null
+    }
+
+    override fun onBottomNavigationFragmentReselected() {
+        binding.fragmentTopNewsRv.scrollToPosition(0)
     }
 }

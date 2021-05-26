@@ -1,20 +1,23 @@
-package com.olamachia.dailygramapp.shared
+package com.olamachia.dailygramapp.features.searchnews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import com.olamachia.dailygramapp.data.NewsArticle
 import com.olamachia.dailygramapp.databinding.TopNewsItemBinding
+import com.olamachia.dailygramapp.shared.NewsArticleComparator
+import com.olamachia.dailygramapp.shared.NewsArticleViewHolder
 
-class NewsArticleListAdapter(
+class NewsArticlePagingAdapter(
     private val onItemClick: (NewsArticle) -> Unit,
     private val onBookmarkClicked: (NewsArticle) -> Unit,
     private val onLikeClicked: (NewsArticle) -> Unit,
     private val onShareClicked: (NewsArticle) -> Unit
-) :
-    ListAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()) {
+) : PagingDataAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
-        val binding = TopNewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            TopNewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return NewsArticleViewHolder(
             binding,
@@ -51,4 +54,6 @@ class NewsArticleListAdapter(
             holder.bind(currentItem)
         }
     }
+
+
 }

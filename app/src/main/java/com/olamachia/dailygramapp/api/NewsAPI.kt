@@ -3,6 +3,7 @@ package com.olamachia.dailygramapp.api
 import com.olamachia.dailygramapp.BuildConfig
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Query
 
 interface NewsAPI {
     companion object {
@@ -13,4 +14,12 @@ interface NewsAPI {
     @Headers("X-Api-Key: $API_KEY")
     @GET("top-headlines?country=us&pageSize=100")
     suspend fun getTopNews(): NewsResponse
+
+    @Headers("X-Api-Key: $API_KEY")
+    @GET("everything")
+    suspend fun searchNews(
+        @Query("q") query: String,
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int
+    ): NewsResponse
 }

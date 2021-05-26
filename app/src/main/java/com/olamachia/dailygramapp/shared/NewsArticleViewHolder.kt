@@ -1,13 +1,11 @@
 package com.olamachia.dailygramapp.shared
 
-
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.data.NewsArticle
 import com.olamachia.dailygramapp.databinding.TopNewsItemBinding
-
 
 class NewsArticleViewHolder(
     private val binding: TopNewsItemBinding,
@@ -16,7 +14,6 @@ class NewsArticleViewHolder(
     private val onLikeClicked: (Int) -> Unit,
     private val onShareClicked: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-
 
     fun bind(newsArticle: NewsArticle) {
         binding.apply {
@@ -35,8 +32,7 @@ class NewsArticleViewHolder(
                 }
             )
 
-
-            if (newsArticle.isLiked){
+            if (newsArticle.isLiked) {
                 newsLikeIv.visibility = View.GONE
                 newsLikeLottieIv.visibility = View.VISIBLE
                 newsLikeLottieIv.playAnimation()
@@ -44,7 +40,6 @@ class NewsArticleViewHolder(
                 newsLikeIv.visibility = View.VISIBLE
                 newsLikeLottieIv.visibility = View.GONE
             }
-
         }
     }
 
@@ -87,6 +82,4 @@ class NewsArticleViewHolder(
             }
         }
     }
-
-
 }
