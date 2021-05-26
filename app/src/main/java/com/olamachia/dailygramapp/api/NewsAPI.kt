@@ -21,5 +21,5 @@ interface NewsAPI {
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("pageSize") pageSize: Int
-    )
+    ): NewsResponse
 }

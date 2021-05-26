@@ -1,5 +1,8 @@
 package com.olamachia.dailygramapp.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.room.withTransaction
 import com.olamachia.dailygramapp.api.NewsAPI
 import com.olamachia.dailygramapp.utils.Resource
@@ -96,6 +99,15 @@ class NewsRepository @Inject constructor(
             }
 
         )
+
+    fun getSearchResultArticlesPaged(query: String, refreshOnInit: Boolean): Flow<PagingData<NewsArticle>> =
+        Pager(
+            config = PagingConfig(pageSize = 20, maxSize = 200),
+            remoteMediator = SearchNewsRemoteMediator(query, newsAPI, newsArticleDataBase, refreshOnInit),
+            pagingSourceFactory = {
+                newsArticleDao.getSearchResultArticlesPaged(query)
+            }
+        ).flow
 
     suspend fun updateArticle(newsArticle: NewsArticle) {
         newsArticleDao.updateArticle(newsArticle)

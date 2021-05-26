@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.olamachia.dailygramapp.MainActivity
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.databinding.FragmentBookmarksBinding
 import com.olamachia.dailygramapp.shared.NewsArticleListAdapter
@@ -20,7 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
+class BookmarksFragment :
+    Fragment(R.layout.fragment_bookmarks),
+    MainActivity.OnBottomNavigationFragmentReselectedListener {
 
     private var currentBinding: FragmentBookmarksBinding? = null
     private val binding get() = currentBinding!!
@@ -98,5 +101,9 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
     override fun onDestroyView() {
         super.onDestroyView()
         currentBinding = null
+    }
+
+    override fun onBottomNavigationFragmentReselected() {
+        binding.fragmentTopNewsRv.scrollToPosition(0)
     }
 }
