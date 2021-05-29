@@ -43,3 +43,11 @@ inline fun SearchView.onQueryTextSubmit(crossinline listener: (String) -> Unit) 
         }
     })
 }
+
+fun Fragment.navigateTo(containerID: Int, fragment: Fragment, tag: String) {
+    parentFragmentManager.beginTransaction().apply {
+        add(containerID, fragment, tag)
+        addToBackStack(null)
+            .commit()
+    }
+}

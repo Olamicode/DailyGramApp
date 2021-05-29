@@ -21,19 +21,18 @@ class NewsArticleLoadStateAdapter(private val retry: () -> Unit) :
             }
         }
 
-            fun bind(loadState: LoadState) {
-                binding.apply {
-                    progressBar.isVisible = loadState is LoadState.Loading
-                    textViewError.isVisible = loadState is LoadState.Error
-                    buttonRetry.isVisible = loadState is LoadState.Error
+        fun bind(loadState: LoadState) {
+            binding.apply {
+                progressBar.isVisible = loadState is LoadState.Loading
+                textViewError.isVisible = loadState is LoadState.Error
+                buttonRetry.isVisible = loadState is LoadState.Error
 
-                    if (loadState is LoadState.Error) {
-                        textViewError.text = loadState.error.localizedMessage ?:
-                        binding.root.context.getString(R.string.unknown_error_occurred)
-                    }
+                if (loadState is LoadState.Error) {
+                    textViewError.text = loadState.error.localizedMessage
+                        ?: binding.root.context.getString(R.string.unknown_error_occurred)
                 }
             }
-
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {

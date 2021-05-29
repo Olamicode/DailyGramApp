@@ -1,7 +1,6 @@
 package com.olamachia.dailygramapp.features.bookmarks
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.olamachia.dailygramapp.MainActivity
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.databinding.FragmentBookmarksBinding
+import com.olamachia.dailygramapp.features.webview.NewsWebViewFragment
 import com.olamachia.dailygramapp.shared.NewsArticleListAdapter
+import com.olamachia.dailygramapp.utils.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -40,9 +41,16 @@ class BookmarksFragment :
                 viewModel.onBookmarkClicked(article)
             },
             onItemClick = { article ->
-                val uri = Uri.parse(article.url)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                requireActivity().startActivity(intent)
+
+                navigateTo(
+                    R.id.fragment_container,
+                    NewsWebViewFragment
+                        .provideNewsWebViewFragmentWithArg(
+                            article.url,
+                            article.source, getString(R.string.title_bookmarks)
+                        ),
+                    NewsWebViewFragment.NEWS_WEB_VIEW_FRAGMENT_TAG
+                )
             },
             onShareClicked = { article ->
 

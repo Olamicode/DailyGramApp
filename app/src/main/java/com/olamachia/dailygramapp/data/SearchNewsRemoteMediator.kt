@@ -44,7 +44,7 @@ class SearchNewsRemoteMediator(
                 }
 
                 val isLiked = likedArticles.any { likedArticles ->
-                    likedArticles.url == likedArticles.url
+                    likedArticles.url == serverSearchResultArticle.url
                 }
 
                 NewsArticle(

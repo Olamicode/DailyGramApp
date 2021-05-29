@@ -1,7 +1,6 @@
 package com.olamachia.dailygramapp.features.topnews
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.olamachia.dailygramapp.MainActivity
 import com.olamachia.dailygramapp.R
 import com.olamachia.dailygramapp.databinding.FragmentTopNewsBinding
+import com.olamachia.dailygramapp.features.webview.NewsWebViewFragment
+import com.olamachia.dailygramapp.features.webview.NewsWebViewFragment.Companion.NEWS_WEB_VIEW_FRAGMENT_TAG
 import com.olamachia.dailygramapp.shared.NewsArticleListAdapter
 import com.olamachia.dailygramapp.utils.Resource
 import com.olamachia.dailygramapp.utils.exhaustive
+import com.olamachia.dailygramapp.utils.navigateTo
 import com.olamachia.dailygramapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -33,6 +35,10 @@ class TopNewsFragment :
     private var currentBinding: FragmentTopNewsBinding? = null
     private val binding get() = currentBinding!!
 
+    companion object {
+        fun provideTopNewsFragment(): TopNewsFragment = TopNewsFragment()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,9 +46,16 @@ class TopNewsFragment :
 
         val newsArticleListAdapter = NewsArticleListAdapter(
             onItemClick = { article ->
-                val uri = Uri.parse(article.url)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                requireActivity().startActivity(intent)
+
+                navigateTo(
+                    R.id.fragment_container,
+                    NewsWebViewFragment
+                        .provideNewsWebViewFragmentWithArg(
+                            article.url,
+                            article.source, getString(R.string.top_news)
+                        ),
+                    NEWS_WEB_VIEW_FRAGMENT_TAG
+                )
             },
             onBookmarkClicked = { article ->
                 viewModel.onBookmarkClicked(article)

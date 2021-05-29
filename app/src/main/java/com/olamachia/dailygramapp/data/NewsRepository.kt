@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class NewsRepository @Inject constructor(
     private val newsAPI: NewsAPI,
-    private val newsArticleDataBase: NewsArticleDataBase
+    private val newsArticleDataBase: NewsArticleDataBase,
 ) {
     private val newsArticleDao = newsArticleDataBase.newsArticleDao()
 
@@ -123,4 +123,8 @@ class NewsRepository @Inject constructor(
     suspend fun deleteAllNonBookmarkedArticlesOlderThan(timestampInMillis: Long) {
         newsArticleDao.deleteAllNonBookmarkedArticlesOlderThan(timestampInMillis)
     }
+
+//    suspend fun deleteAllNonBookmarkedArticlesOlderThan(timestampInMillis: Long) {
+//        newsArticleDao.deleteAllNonBookmarkedArticlesOlderThan(timestampInMillis)
+//    }
 }

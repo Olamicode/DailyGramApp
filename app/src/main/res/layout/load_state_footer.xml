@@ -4,17 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:background="@color/black"
     android:orientation="vertical"
     android:padding="8dp">
 
     <ProgressBar
         android:id="@+id/progress_bar"
+        android:indeterminateTint="@color/green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/text_view_error"
         android:layout_width="wrap_content"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         tools:text="An error occurred" />
 
@@ -22,7 +25,9 @@
         android:id="@+id/button_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/retry" />
+        android:text="@string/retry"
+        android:backgroundTint="@color/dark_grey"
+        />
 
 
 </LinearLayout>
