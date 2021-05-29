@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".features.searchnews.SearchNewsFragment">
 
@@ -29,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/retry_btn"
                 android:layout_margin="@dimen/eight_pixel"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal"
                 android:visibility="gone"
                 tools:text="An error occurred."
@@ -40,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/retry"
+                android:backgroundTint="@color/dark_grey"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
@@ -59,6 +62,7 @@
                 android:layout_centerInParent="true"
                 android:visibility="gone"
                 tools:visibility="visible"
+                android:textColor="@color/white"
                 android:text="@string/search_instructions" />
 
         </RelativeLayout>

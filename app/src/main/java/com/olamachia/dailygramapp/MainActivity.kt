@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bookmarksFragment: BookmarksFragment
 
     companion object {
-        private const val TAG_TOP_NEWS_FRAGMENT = "TAG_TOP_NEWS_FRAGMENT"
+        const val TAG_TOP_NEWS_FRAGMENT = "TAG_TOP_NEWS_FRAGMENT"
         private const val TAG_SEARCH_NEWS_FRAGMENT = "TAG_SEARCH_NEWS_FRAGMENT"
         private const val TAG_BOOKMARKS_FRAGMENT = "TAG_BOOKMARKS_FRAGMENT"
         private const val KEY_SELECTED_INDEX = "KEY_SELECTED_INDEX"
